@@ -15,7 +15,7 @@ edition.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-crossterm = { version = "0.28.1", optional = true }
+crossterm = { workspace = true, optional = true }
 document-features = { version = "0.2.7", optional = true }
 indoc = "2"
 instability.workspace = true
@@ -38,7 +38,7 @@ termion = { version = "4.0.0", optional = true }
 argh = "0.1.12"
 color-eyre = "0.6.2"
 criterion = { version = "0.5.1", features = ["html_reports"] }
-crossterm = { version = "0.28.1", features = ["event-stream"] }
+crossterm = { workspace = true, features = ["event-stream"] }
 fakeit = "1.1"
 font8x8 = "0.3.1"
 futures = "0.3.30"
@@ -180,11 +180,6 @@ bench = false
 [[bench]]
 name = "main"
 harness = false
-
-[[example]]
-name = "async"
-required-features = ["crossterm"]
-doc-scrape-examples = true
 
 [[example]]
 name = "barchart"
