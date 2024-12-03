@@ -372,10 +372,18 @@ impl ModifierDiff {
         if removed.contains(Modifier::REVERSED) {
             queue!(w, SetAttribute(CAttribute::NoReverse))?;
         }
-        if removed.contains(Modifier::BOLD) {
+        if removed.contains(Modifier::BOLD) || removed.contains(Modifier::DIM) {
+            // Bold and Dim are both reset by applying the Normal intensity
             queue!(w, SetAttribute(CAttribute::NormalIntensity))?;
+
+            // The remaining Bold and Dim attributes must be
+            // reapplied after the intensity reset above.
             if self.to.contains(Modifier::DIM) {
                 queue!(w, SetAttribute(CAttribute::Dim))?;
+            }
+
+            if self.to.contains(Modifier::BOLD) {
+                queue!(w, SetAttribute(CAttribute::Bold))?;
             }
         }
         if removed.contains(Modifier::ITALIC) {
@@ -383,9 +391,6 @@ impl ModifierDiff {
         }
         if removed.contains(Modifier::UNDERLINED) {
             queue!(w, SetAttribute(CAttribute::NoUnderline))?;
-        }
-        if removed.contains(Modifier::DIM) {
-            queue!(w, SetAttribute(CAttribute::NormalIntensity))?;
         }
         if removed.contains(Modifier::CROSSED_OUT) {
             queue!(w, SetAttribute(CAttribute::NotCrossedOut))?;
